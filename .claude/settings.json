@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(kaggle competitions download:*)",
+      "Bash(kaggle competitions files:*)"
+    ]
+  }
+}
