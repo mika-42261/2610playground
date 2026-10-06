@@ -1,0 +1,16 @@
+# コンペ情報は competition.md を参照
+train_path: /kaggle/input/playground-series-s6e10/train.csv
+test_path: /kaggle/input/playground-series-s6e10/test.csv
+id_col: id
+target: satisfaction
+positive: satisfied
+metric: auc
+n_splits: 5
+seed: 42
+features: [example]
+model: lgbm
+params:
+  n_estimators: 500
+  learning_rate: 0.05
+  verbose: -1
+note: ベースライン
