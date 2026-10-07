@@ -13,9 +13,9 @@
 - `blend.py`: 保存済みOOFから最適な重みを求め、`submission.csv` を作る
 
 ## 実行環境
-- コードはClaude Codeで書き、実行はKaggle Notebookで行う(Claude Codeからはデータに触れない)
-- Kaggle側は `!git clone` で取り込み、`!python run.py exp_XXX` で実行する
-- 実行結果(results.csvの新しい行、EDAの出力)はユーザーがClaude Codeに貼って共有する
+- コードと実行はClaude Code側(クラウド環境)で行う。データは `kaggle competitions download` で取得し、リポジトリの外に置く(コミットしない)
+- 実行結果はClaude Codeがチャットに出す(「チャットでの見せ方」を参照)
+- ユーザーがKaggle Notebookで動かしたいときは `!git clone` で取り込み、`!python run.py exp_XXX` で実行できる
 
 ## ノートブックの書き方
 - 1セル = 1目的。データ読み込み / 特徴量 / CV / 学習 / 提出作成は別セルにする
