@@ -11,4 +11,8 @@
 
 ## 確認すること(EDAで埋める)
 - satisfaction の値の種類(陽性ラベルはどれか)→ configの `positive`
+  - 確認済み: `True` / `False` の bool 型。陽性は `True`(train の 44.4%)。config は `positive: true`
 - 欠損・カテゴリ列・外れ値
+  - 欠損: `Arrival Delay in Minutes` のみ(train 292件 / test 130件、どちらも約0.04%)
+  - カテゴリ列: 文字列4本(Gender, Customer Type, Type of Travel, Class)。評価列13本は0〜5の整数
+  - train/test で値の種類は一致(連続値3列のみユニーク数に差)。詳細は `01_eda.ipynb`
