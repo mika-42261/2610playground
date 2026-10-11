@@ -48,6 +48,10 @@
 - 図(グラフ)はチャットに貼れないので、画像ファイルとして送る(SendUserFile)
 - 実験の結果を見せるときは、foldごとの AUC を train(学習に使った側)と valid(使わなかった側)の両方、全foldぶん表示する(過学習の確認用)。`python fold_auc.py exp_XXX` で出せる。使わなかった側は「valid」と呼ぶ(test は test.csv のことで正解がないので、foldの検証用を test とは呼ばない)
 
+## 提出
+- 提出は基本的にClaude Codeがやる(`python blend.py exp_XXX` → `kaggle competitions submit`)。提出したら、公開スコアを確認して `results.csv` の `lb` 欄に書く
+- 「ファイルをください」と言われたときだけ、提出せずにファイルを送る(SendUserFile)
+
 ## 注意
 - OOF target encoding は fold を考慮して作る(リーク防止)
 - 実験ごとにconfigとresults.csvの行が対応するようにする
