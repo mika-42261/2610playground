@@ -24,8 +24,8 @@ def example(df):
 
 @feature("encode_class")
 def encode_class(df):
-    # Class(文字列)を、座席のグレード順の数字にする(Eco=0, Eco Plus=1, Business=2)
-    class_rules = {"Eco": 0, "Eco Plus": 1, "Business": 2}
+    # Class(文字列)を、座席のグレード順の数字にする(Eco=1, Eco Plus=2, Business=3。0は使わない)
+    class_rules = {"Eco": 1, "Eco Plus": 2, "Business": 3}
     df["Class"] = df["Class"].map(class_rules)
     return df
 

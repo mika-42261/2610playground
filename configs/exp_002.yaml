@@ -12,4 +12,4 @@ params:
   n_estimators: 500
   learning_rate: 0.05
   verbose: -1
-note: 相関が強い2列(Online boarding, Class)だけのlgbm
+note: 相関が強い2列(Online boarding, Class)だけのlgbm。Class は Eco=1, Eco Plus=2, Business=3
