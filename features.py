@@ -1,4 +1,6 @@
 """特徴量は関数1つ=1施策。@feature で登録し、configの features に名前を書いてON/OFFする。"""
+import pandas as pd
+
 REGISTRY = {}
 
 
@@ -72,3 +74,47 @@ def make_top_n(n):
 # top3 〜 top21 を登録する(top2 は select_top2 として登録済み)
 for n in range(3, len(CORR_RANK) + 1):
     feature(f"top{n}")(make_top_n(n))
+
+
+@feature("keep_base2_and_new")
+def keep_base2_and_new(df):
+    # 土台(exp_002)の2列と、新しく作った列(名前が f_ で始まる列)だけを残す
+    # id は残す(run.py が後で取り除く)
+    keep_cols = ["id", "Online boarding", "Class"]
+    for c in df.columns:
+        if c.startswith("f_"):
+            keep_cols.append(c)
+    return df[keep_cols]
+
+
+@feature("f_age")
+def f_age(df):
+    # 案A: 年齢をそのまま新しい列として入れる(木が60歳あたりの区切りを自分で見つける)
+    df["f_age"] = df["Age"]
+    return df
+
+
+# 年齢帯の区切り(EDA Q9/Q10 の台形の形から): 20歳未満 / 20-39 / 40-59 / 60-64 / 65歳以上
+AGE_EDGES = [0, 20, 40, 60, 65, 200]
+
+
+def age_band_code(age):
+    # 年齢を 1〜5 の番号にする(1=20歳未満, 2=20-39, 3=40-59, 4=60-64, 5=65歳以上)
+    return pd.cut(age, AGE_EDGES, labels=[1, 2, 3, 4, 5], right=False).astype(int)
+
+
+@feature("f_age_band")
+def f_age_band(df):
+    # 案C: 年齢帯(5区分)の番号を新しい列として入れる
+    df["f_age_band"] = age_band_code(df["Age"])
+    return df
+
+
+@feature("f_age_band_travel")
+def f_age_band_travel(df):
+    # 案D: 年齢帯 × 利用目的(Business travel か)の組み合わせを、1つの番号にする
+    # 番号 = 年齢帯の番号 * 2 + (Business travel なら 1、Personal Travel なら 0)  → 2〜11 の10通り
+    band = age_band_code(df["Age"])
+    is_business_travel = (df["Type of Travel"] == "Business travel").astype(int)
+    df["f_age_band_travel"] = band * 2 + is_business_travel
+    return df

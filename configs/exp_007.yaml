@@ -1,0 +1,15 @@
+train_path: /kaggle/input/playground-series-s6e10/train.csv
+test_path: /kaggle/input/playground-series-s6e10/test.csv
+id_col: id
+target: satisfaction
+positive: true  # 実データは True/False の bool 型(True が 44.4%)。True を 1 として扱う。bool/数値の target では run.py はこの値を使わない
+metric: auc
+n_splits: 5
+seed: 42
+features: [encode_class, f_age, keep_base2_and_new]
+model: lgbm
+params:
+  n_estimators: 500
+  learning_rate: 0.05
+  verbose: -1
+note: exp_002 に Age をそのまま追加(案A)。Class は Eco=1, Eco Plus=2, Business=3
