@@ -1,0 +1,19 @@
+train_path: /kaggle/input/playground-series-s6e10/train.csv
+test_path: /kaggle/input/playground-series-s6e10/test.csv
+id_col: id
+target: satisfaction
+positive: true  # 実データは True/False の bool 型(True が 44.4%)。True を 1 として扱う。bool/数値の target では run.py はこの値を使わない
+metric: auc
+n_splits: 5
+seed: 42
+features: [encode_class, f_age_band5, keep_base2_and_new]
+model: lgbm_te
+params:
+  n_estimators: 500
+  learning_rate: 0.05
+  verbose: -1
+  te_keys: [f_age_band5, Class]
+  te_smoothing: 20
+  te_inner_folds: 5
+  te_drop_keys: [f_age_band5]
+note: exp_010 と同じ年齢帯5区分 × Class を、ターゲットエンコーディング(OOF、平滑化20)にして、年齢帯の番号の代わりに入れる
