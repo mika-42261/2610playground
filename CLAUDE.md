@@ -13,9 +13,9 @@
 - `blend.py`: 保存済みOOFから最適な重みを求め、`submission.csv` を作る
 
 ## 実行環境
-- コードはClaude Codeで書き、実行はKaggle Notebookで行う(Claude Codeからはデータに触れない)
-- Kaggle側は `!git clone` で取り込み、`!python run.py exp_XXX` で実行する
-- 実行結果(results.csvの新しい行、EDAの出力)はユーザーがClaude Codeに貼って共有する
+- コードと実行はClaude Code側(クラウド環境)で行う。データは `kaggle competitions download` で取得し、リポジトリの外に置く(コミットしない)
+- 実行結果はClaude Codeがチャットに出す(「チャットでの見せ方」を参照)
+- ユーザーがKaggle Notebookで動かしたいときは `!git clone` で取り込み、`!python run.py exp_XXX` で実行できる
 
 ## ノートブックの書き方
 - 1セル = 1目的。データ読み込み / 特徴量 / CV / 学習 / 提出作成は別セルにする
@@ -41,6 +41,16 @@
 
 抜けている点があれば、書き直さず、質問で1つずつ指摘する(例:「比較の相手は何ですか?」)。
 ユーザーの言葉は残し、勝手に書き換えない。
+
+## チャットでの見せ方
+- コードを書いたら、コードと実行結果の両方をチャットに出す(結果だけ・コードだけにしない)
+- 結果の表は「上の表のとおり」と参照せず、その返信の中に書く(ツール出力はユーザーに見えないことがある)
+- 図(グラフ)はチャットに貼れないので、画像ファイルとして送る(SendUserFile)
+- 実験の結果を見せるときは、foldごとの AUC を train(学習に使った側)と valid(使わなかった側)の両方、全foldぶん表示する(過学習の確認用)。`python fold_auc.py exp_XXX` で出せる。使わなかった側は「valid」と呼ぶ(test は test.csv のことで正解がないので、foldの検証用を test とは呼ばない)
+
+## 提出
+- 提出は基本的にClaude Codeがやる(`python blend.py exp_XXX` → `kaggle competitions submit`)。提出したら、公開スコアを確認して `results.csv` の `lb` 欄に書く
+- 「ファイルをください」と言われたときだけ、提出せずにファイルを送る(SendUserFile)
 
 ## 注意
 - OOF target encoding は fold を考慮して作る(リーク防止)
