@@ -118,3 +118,15 @@ def f_age_band_travel(df):
     is_business_travel = (df["Type of Travel"] == "Business travel").astype(int)
     df["f_age_band_travel"] = band * 2 + is_business_travel
     return df
+
+
+# 年齢帯の区切り(EDA Q11/Q12 の1歳ごとの境目から): 17歳以下 / 18-24 / 25-38 / 39-60 / 61歳以上
+# right=False なので、区切りの数字の年齢から「次の bin」になる(39 歳から 39-60 の bin、61 歳から 61歳以上の bin)
+AGE_EDGES_5 = [0, 18, 25, 39, 61, 200]
+
+
+@feature("f_age_band5")
+def f_age_band5(df):
+    # 年齢を 1〜5 の番号にして、新しい列として入れる(1=17歳以下, 2=18-24, 3=25-38, 4=39-60, 5=61歳以上)
+    df["f_age_band5"] = pd.cut(df["Age"], AGE_EDGES_5, labels=[1, 2, 3, 4, 5], right=False).astype(int)
+    return df
