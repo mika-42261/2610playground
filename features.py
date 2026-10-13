@@ -130,3 +130,11 @@ def f_age_band5(df):
     # 年齢を 1〜5 の番号にして、新しい列として入れる(1=17歳以下, 2=18-24, 3=25-38, 4=39-60, 5=61歳以上)
     df["f_age_band5"] = pd.cut(df["Age"], AGE_EDGES_5, labels=[1, 2, 3, 4, 5], right=False).astype(int)
     return df
+
+
+@feature("f_travel")
+def f_travel(df):
+    # 利用目的を 1/2 の数字にして、新しい列として入れる(Personal Travel=1, Business travel=2。0は使わない)
+    # ターゲットエンコーディングのキーに使う(元の Type of Travel は、土台に入っていないため)
+    df["f_travel"] = df["Type of Travel"].map({"Personal Travel": 1, "Business travel": 2})
+    return df
